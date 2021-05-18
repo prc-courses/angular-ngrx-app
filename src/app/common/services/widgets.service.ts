@@ -14,31 +14,36 @@ export class WidgetsService {
 
   add(widget: Widget){
     // this.widgets = [...this.widgets, widget];
-    return this.http.post<Widget>(BASE_URL, widget, HEADER).toPromise()
-      .then(data => {
-        this.widgets.push(data);
-        return data;
-      });
+    return this.http.post<Widget>(BASE_URL, widget, HEADER)
+    .pipe(tap(data => {
+      this.widgets = [...this.widgets, data];
+      return data;
+    }));
   }
 
   remove(widget: Widget){
-    return this.http.delete<Widget>(`${BASE_URL}?id=${widget.id}`).toPromise()
-      .then(removed => {
-        const index = this.widgets.indexOf(removed);
-        this.widgets.splice(index, 1);
-      });
+    return this.http.delete<Widget>(`${BASE_URL}?id=${widget.id}`)
+    .pipe(tap(removed => {
+      this.widgets = this.widgets.filter(
+        (currentWidget) => currentWidget.id !== removed.id
+      );
+    }));
   }
 
   update(widget: Widget, update: Widget){
-    return this.http.put<Widget>(`${BASE_URL}?id=${widget.id}`, update, HEADER).toPromise()
-      .then(updated => {
-        const index = this.widgets.indexOf(widget);
-        this.widgets[index] = updated;
-      });
+    return this.http.put<Widget>(`${BASE_URL}?id=${widget.id}`, update, HEADER)
+    .pipe(tap(updated => {
+      const index = this.widgets.indexOf(updated);
+      this.widgets = [
+        ...this.widgets.slice(0, index),
+        updated,
+        ...this.widgets.slice(index + 1)
+      ]
+    }));
   }
 
   loadWidgets() {
-    return this.http.get<Widget[]>(BASE_URL).toPromise()
-      .then(json => this.widgets = json);
+    return this.http.get<Widget[]>(BASE_URL)
+      .pipe(tap(json => this.widgets = [...this.widgets, ...json]));
     }
 }

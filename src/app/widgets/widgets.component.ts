@@ -15,7 +15,7 @@ import {Widget} from "../common/models/widget.model";
       </div>
       <div class="mdl-cell mdl-cell--6-col">
         <widget-details (saved)="saveWidget($event)" (cancelled)="resetWidget()"
-        [widget]="selectedWidget"></widget-details>
+        [widget]="selectedWidget | async"></widget-details>
       </div>
     </div>
   `,
@@ -27,27 +27,26 @@ import {Widget} from "../common/models/widget.model";
 })
 export class WidgetsComponent {
   widgets = [];
-  selectedWidget: Widget;
-
-  static emptyWidget: Widget = {id: null, name: '', price: 0};
+  selectedWidget: Observable<Widget|any>;
 
   constructor(private _widgetsService: WidgetsService,
     private _store: Store<AppStore>) {
-    this.selectedWidget = WidgetsComponent.emptyWidget;
+    this.selectedWidget = _store.select('selectedWidget');
 
     _widgetsService.loadWidgets()
-      .then(
+      .subscribe(
         widgets => this.widgets = widgets,
         error => console.error(error.json())
       );
   }
 
   resetWidget() {
-    this.selectedWidget = WidgetsComponent.emptyWidget;
+    let emptyWidget: Widget = {id: null, name: '', price: 0};
+    this._store.dispatch({type: 'SELECT_WIDGET', payload: emptyWidget});
   }
 
   selectWidget(widget) {
-    this.selectedWidget = widget;
+    this._store.dispatch({type: 'SELECT_WIDGET', payload: widget});
   }
 
   saveWidget(widget) {

@@ -5,6 +5,8 @@ import {ItemsService} from '../common/services/items.service';
 import {AppStore} from '../common/models/appstore.model';
 import {Item} from '../common/models/item.model';
 
+import {Gadget} from '../common/models/gadget.model';
+import {GadgetService} from '../common/services/gadget.service'
 
 @Component({
   selector: 'items',
@@ -31,12 +33,16 @@ import {Item} from '../common/models/item.model';
 export class ItemsComponent {
   items: Observable<Array<Item>>;
   selectedItem: Observable<Item|any>;
+  gadget: Observable<Gadget>;
 
   constructor(private itemsService: ItemsService,
+              private gadgetService: GadgetService,
               private store: Store<AppStore>) {
     this.items = itemsService.items;
     this.selectedItem = store.select('selectedItem');
     this.selectedItem.subscribe(v => console.log(v));
+
+    this.gadget = gadgetService.gadget;
 
     itemsService.loadItems();
   }

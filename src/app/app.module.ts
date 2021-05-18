@@ -17,9 +17,11 @@ import { WidgetsListComponent } from './widgets/widgets-list.component';
 import { WidgetDetailComponent } from './widgets/widget-detail.component';
 import { ItemsService } from './common/services/items.service';
 import { WidgetsService } from './common/services/widgets.service';
+import { GadgetService } from './common/services/gadget.service';
 
 import { items } from './common/stores/items.store';
 import { selectedItem } from './common/stores/selectedItem.store';
+import { selectedWidget } from './common/stores/selectedWidget.store';
 
 
 @NgModule({
@@ -38,7 +40,7 @@ import { selectedItem } from './common/stores/selectedItem.store';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    StoreModule.forRoot({items, selectedItem}),
+    StoreModule.forRoot({items, selectedItem, selectedWidget}),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
@@ -46,7 +48,8 @@ import { selectedItem } from './common/stores/selectedItem.store';
   ],
   providers: [
     ItemsService,
-    WidgetsService
+    WidgetsService,
+    GadgetService
   ],
   bootstrap: [AppComponent]
 })
