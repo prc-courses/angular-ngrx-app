@@ -1,6 +1,6 @@
-# NgRxApp
+# NgRxApp - solutions
 
-Example RESTful master-detail NgRx app to be used on my Angular courses.
+Example RESTful master-detail NgRx app to be used on my Angular courses - solutions to the challenges.
 
 ## Updated to Angular 11
 
