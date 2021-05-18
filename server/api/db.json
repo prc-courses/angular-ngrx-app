@@ -1,0 +1,51 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "Item 1",
+      "description": "This is a description"
+    },
+    {
+      "id": 2,
+      "name": "Item 2",
+      "description": "This is another description"
+    },
+    {
+      "id": 3,
+      "name": "Item 3",
+      "description": "This is a lovely item"
+    }
+  ],
+  "widgets": [
+    {
+      "id": 1,
+      "name": "Widget 01",
+      "price": "100"
+    },
+    {
+      "id": 2,
+      "name": "Widget 02",
+      "price": "200"
+    },
+    {
+      "id": 3,
+      "name": "Widget 03",
+      "price": "300"
+    },
+    {
+      "id": 4,
+      "name": "Widget 04",
+      "price": "400"
+    },
+    {
+      "id": 5,
+      "name": "Widget 05",
+      "price": "500"
+    },
+    {
+      "id": 6,
+      "name": "Widget 06",
+      "price": "600"
+    }
+  ]
+}
